@@ -1,0 +1,5 @@
+mptt creates a hierarchy of data:
+    Ex. Men
+		      Shoes
+					  Boots
+						  Rain

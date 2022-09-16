@@ -1,0 +1,2 @@
+-To start nextjs use:
+    - npm run dev

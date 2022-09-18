@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import '../styles/globals.css';
 import theme from '../src/theme';
+import '../styles/globals.css'
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;

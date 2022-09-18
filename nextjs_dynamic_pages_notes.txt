@@ -1,0 +1,4 @@
+- When making dynamic pages first name file in brackets. In this project we have:
+    - [slug].js
+    - check out [slug].js in core2/pages/product
+    - need to research more on subject

@@ -1,0 +1,9 @@
+- Make sure to add to CORS_ALLOWED_ORIGINS and CSRF_TRUSTED_ORIGINS,the urls
+    'http://localhost:3000', 
+    'http://127.0.0.1:8000'
+
+- Also set fetch urls in frontend as
+    'http://localhost:8000/account/csrf'
+    'http://loaclhost:8000/account/login'
+
+- These were for login, idk if rest of frontend needs to fetch same way

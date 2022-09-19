@@ -5,6 +5,9 @@ import { makeStyles } from "@material-ui/styles";
 import React, { useState } from "react";
 import Router from "next/router";
 
+import { useMachine } from "@xstate/react";
+import { Machine } from "xstate";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -25,6 +28,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const toggleMachine = Machine({
+  id: 'toggle',
+  initial: 'loggedOut',
+  states: {
+    loggedOut: {
+      on: {TOGGLE: 'loggedIn'}
+    },
+    loggedIn: {
+      on: { TOGGLE: 'loggedOut' }
+    }
+  }
+})
+
 export const Login = () => {
   const classes = useStyles();  
 
@@ -32,6 +48,9 @@ export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  // state allows for getting data
+  // send will allow for manipulation of data
+  const [state, send] = useMachine(toggleMachine);
 
   React.useEffect(() => {
     fetch('http://localhost:8000/account/csrf/', {
@@ -65,13 +84,15 @@ export const Login = () => {
     })
     .then((data) => {
       console.log(data);
-      Router.push('/dashboard')
+      send('TOGGLE')
+     // Router.push('/dashboard')
     })
       .catch((err) => {
-      console.log(err);
-      setError('Could not connect to server.')
-    })
+    console.log(err);
+      setError('Username or password Incorrect.')
+    });
   }
+  console.log(state.value)
 
   return (
     <>

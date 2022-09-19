@@ -3,7 +3,7 @@ from rest_framework import generics
 # if get no model has no objects, just write line below, then write line in get_queryset
 from . import models
 from .models import Category, Product
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, CategorySerializer
 # Create your views here.
 
 class ProductListView(generics.ListAPIView):
@@ -21,4 +21,24 @@ class CategoryItemView(generics.ListAPIView):
 
     def get_queryset(self):
         # gets slug from url api/category/<slug:slug>/
-        return models.Product.objects.filter(category__slug=self.kwargs['slug'])
+        '''
+          Men = level=0
+            Clothes = level=1
+            shoes = level=1
+              Boots = level=2
+        '''
+        # This line wil get everything in clothes and its children, shoes and its children
+        return models.Product.objects.filter(category__in=Category.objects.get(slug=self.kwargs['slug']).get_descendants(include_self=True))
+    # check in admin categories
+
+class CategoryListView(generics.ListAPIView):
+    # This filters the hierarchy in categories
+    '''
+      Men = level=0
+        Clothes = level=1
+        shoes = level=1
+          Boots = level=2
+    '''
+    # check in admin categories
+    queryset = Category.objects.filter(level=1)
+    serializer_class = CategorySerializer

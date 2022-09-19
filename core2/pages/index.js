@@ -29,11 +29,11 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "140%",
   },
 }));
-function Home({ posts }) {
+function Home({ posts, categories }) {
   const classes = useStyles();
   return (
     <>
-      <Header />
+      <Header data={categories} />
       <main>
         <Container className={classes.cardGrid} maxWidth="lg">
           <Grid container spacing={2}>
@@ -63,12 +63,18 @@ function Home({ posts }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch('http://127.0.0.1:8000/api/')
+  // fetch all posts in api
+  const res = await fetch('http://127.0.0.1:8000/api/');
   const posts = await res.json();
-
+ 
+  // fetch categories
+  const ress = await fetch('http://127.0.0.1:8000/api/category/');
+  const categories = await ress.json();
+ 
   return {
     props: {
-      posts
+      posts,
+      categories,
     }
   }
 }

@@ -1,6 +1,6 @@
 # from django.db.models.expressions import fields
 from rest_framework import serializers
-from .models import Product, ProductImage
+from .models import Category, Product, ProductImage
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,4 +15,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id', 'title', 'category', 'description', 'slug', 'regular_price', 'product_image']
 
-
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['name', 'slug']
